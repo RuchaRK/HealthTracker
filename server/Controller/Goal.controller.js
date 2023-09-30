@@ -1,6 +1,6 @@
 const express = require("express");
 
-const goalRouter = express.Router;
+const goalRouter = express.Router();
 
 const {
   createNewGoal,
@@ -8,7 +8,7 @@ const {
   deleteAGoal,
 } = require("../Services/Goal.services");
 
-app.get("/", async (req, res) => {
+goalRouter.get("/", async (req, res) => {
   try {
     const allGoals = await readAllGoals();
     return res.status(200).json({ message: "Success", allGoals });
@@ -20,7 +20,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+goalRouter.post("/", async (req, res) => {
   try {
     const objToInsert = req.body;
     const insertedObj = await createNewGoal(objToInsert);
@@ -33,7 +33,7 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.delete("/:goalId", async (req, res) => {
+goalRouter.delete("/:goalId", async (req, res) => {
   try {
     const { goalId } = req.params;
     const deletedData = await deleteAGoal(goalId);

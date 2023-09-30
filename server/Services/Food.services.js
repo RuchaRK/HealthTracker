@@ -4,9 +4,10 @@ async function addFoodItems(foodData) {
   try {
     const food = await new Food(foodData);
     const itemAdded = await food.save();
-    console.log(itemAdded);
+    return itemAdded;
   } catch (error) {
     console.log("error occurred", error);
+    throw new error();
   }
 }
 
@@ -23,9 +24,9 @@ const foodItem5 = {
 async function readAllFoodItems() {
   try {
     const foodItems = await Food.find();
-    console.log(foodItems);
+    return foodItems;
   } catch (error) {
-    console.log("error occurred", error);
+    throw new error();
   }
 }
 
@@ -34,9 +35,10 @@ async function readAllFoodItems() {
 async function deleteFoodItem(foodId) {
   try {
     const deletedItem = await Food.findByIdAndDelete(foodId);
-    console.log(deletedItem);
+    return deletedItem;
   } catch (error) {
     console.log("deleted item", error);
+    throw new error();
   }
 }
 //deleteFoodItem("6517c1531c017794f575748b");

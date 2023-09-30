@@ -4,9 +4,9 @@ async function addNewExercise(exerciseData) {
   try {
     const exercise = new Exercise(exerciseData);
     const newExercise = await exercise.save();
-    console.log(newExercise);
+    return newExercise;
   } catch (error) {
-    console.log("New Error occurred", error);
+    throw new error();
   }
 }
 
@@ -18,18 +18,18 @@ const exerciseToAdd = {
 async function readAllExercises() {
   try {
     const exercises = await Exercise.find();
-    console.log(exercises);
+    return exercises;
   } catch (error) {
-    console.log("New Error occurred", error);
+    throw new error();
   }
 }
 
 async function deleteAnExercise(exerciseId) {
   try {
     const deletedExercise = await Exercise.findByIdAndDelete(exerciseId);
-    console.log(deletedExercise);
+    return deletedExercise;
   } catch (error) {
-    console.log("New error", error);
+    throw new error();
   }
 }
 //deleteAnExercise("6517b7691ecf39b01e225916");

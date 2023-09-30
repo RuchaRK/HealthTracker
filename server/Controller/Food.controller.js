@@ -8,9 +8,10 @@ const {
   deleteFoodItem,
 } = require("../Services/Food.services");
 
-app.get("/", async (req, res) => {
+foodRouter.get("/", async (req, res) => {
   try {
     const foodItems = await readAllFoodItems();
+
     return res.status(200).json({ message: "Success", foodItems });
   } catch (error) {
     res.status(500).json({
@@ -20,7 +21,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+foodRouter.post("/", async (req, res) => {
   try {
     const objToInsert = req.body;
     const insertedObj = await addFoodItems(objToInsert);
@@ -33,7 +34,7 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.delete("/:foodId", async (req, res) => {
+foodRouter.delete("/:foodId", async (req, res) => {
   try {
     const { foodId } = req.params;
     const deletedData = await deleteFoodItem(foodId);

@@ -8,7 +8,7 @@ const {
   deleteAnExercise,
 } = require("../Services/Exercise.services");
 
-app.get("/", async (req, res) => {
+exerciseRouter.get("/", async (req, res) => {
   try {
     const allExercises = await readAllExercises();
     return res.status(200).json({ message: "Success", allExercises });
@@ -20,7 +20,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+exerciseRouter.post("/", async (req, res) => {
   try {
     const objToInsert = req.body;
     const insertedObj = await addNewExercise(objToInsert);
@@ -33,7 +33,7 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.delete("/:exerciseId", async (req, res) => {
+exerciseRouter.delete("/:exerciseId", async (req, res) => {
   try {
     const { exerciseId } = req.params;
     const deletedData = await deleteAnExercise(exerciseId);

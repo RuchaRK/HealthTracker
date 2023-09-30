@@ -4,9 +4,9 @@ async function createNewGoal(goalData) {
   try {
     const goal = await new Goal(goalData);
     const newGoal = await goal.save();
-    console.log(newGoal);
+    return newGoal;
   } catch (error) {
-    console.log("error appeared -", error);
+    throw new error();
   }
 }
 
@@ -24,8 +24,9 @@ async function readAllGoals() {
   try {
     const goals = await Goal.find();
     console.log(goals);
+    return goals;
   } catch (error) {
-    console.log(error);
+    throw new error();
   }
 }
 
@@ -34,9 +35,9 @@ async function readAllGoals() {
 async function deleteAGoal(goalId) {
   try {
     const deletedGoal = await Goal.findByIdAndDelete(goalId);
-    console.log(deletedGoal);
+    return deletedGoal;
   } catch (error) {
-    console.log("error appeared", error);
+    throw new error();
   }
 }
 
