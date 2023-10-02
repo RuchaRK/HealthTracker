@@ -1,36 +1,36 @@
 import styled from '@emotion/styled';
+import { CgProfile } from 'react-icons/cg';
 
 const HeaderContainer = styled.div`
   display: flex;
+  justify-content: space-between;
+  padding: 0px 32px;
+  border-bottom: 1px solid #cbd5e1;
+  background: #fff;
+  height: 100px;
+  align-items: center;
 `;
 
-const Heading = styled.div`
+const Greetings = styled.div`
   display: flex;
-`;
-const GreetingsContainer = styled.div`
-  display: flex;
+  gap: 4px;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
-const Greetings = styled.div``;
-
-const Search = styled.div``;
-const SearchContainer = styled.div``;
+const IconContainer = styled.div``;
 
 export const Header = () => {
   return (
     <HeaderContainer>
-      <Heading>
-        <h1>Fitness</h1>
-      </Heading>
-      <GreetingsContainer>
-        <Greetings>
-          <small>Good Morning</small>
-          <h4>Welcome Back!!!</h4>
-        </Greetings>
-        <SearchContainer>
-          <Search></Search>
-        </SearchContainer>
-      </GreetingsContainer>
+      <Greetings>
+        <small>Good Morning</small>
+        <h4>Welcome Back!!!</h4>
+      </Greetings>
+
+      <IconContainer>
+        <CgProfile size={25} />
+      </IconContainer>
     </HeaderContainer>
   );
 };

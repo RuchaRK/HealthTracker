@@ -1,15 +1,12 @@
-
 import './App.css';
-import { Header } from "./Components/Header"
-
+import { PageWrapper } from './Components/PageWrapper';
 
 function App() {
-
   return (
     <>
-      <Header />
+      <PageWrapper />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
