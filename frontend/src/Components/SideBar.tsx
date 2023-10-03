@@ -3,6 +3,8 @@ import { TbTargetArrow } from 'react-icons/tb';
 import { RiDashboardFill } from 'react-icons/ri';
 import { MdOutlineFitnessCenter } from 'react-icons/md';
 import { BiLogOut, BiSolidNotepad } from 'react-icons/bi';
+import { NavLink } from 'react-router-dom';
+import { routeName } from '../App.routes';
 
 const SideBarComponent = styled.div`
   display: flex;
@@ -46,22 +48,22 @@ const IconContainer = styled.div`
 const FooterComponent = styled.div``;
 const menu = [
   {
-    route: '/',
+    route: routeName.DashBoard,
     label: 'Dashboard',
     icon: <RiDashboardFill />
   },
   {
-    route: '/exercise',
+    route: routeName.EXERCISE,
     label: 'Workout',
     icon: <MdOutlineFitnessCenter />
   },
   {
-    route: '/foodTracker',
+    route: routeName.FOOD,
     label: 'Diet Plan',
     icon: <BiSolidNotepad />
   },
   {
-    route: '/goals',
+    route: routeName.GOALS,
     label: 'Goals',
     icon: <TbTargetArrow />
   }
@@ -77,10 +79,19 @@ export const SideBar = () => {
 
         <PagesContainer>
           {menu.map((item) => (
-            <IconContainer>
-              {item.icon}
-              <h5>{item.label}</h5>
-            </IconContainer>
+            <NavLink
+              to={item.route}
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? 'bold' : '',
+                  color: isActive ? '#f97316' : 'black'
+                };
+              }}>
+              <IconContainer>
+                {item.icon}
+                {item.label}
+              </IconContainer>
+            </NavLink>
           ))}
         </PagesContainer>
       </div>

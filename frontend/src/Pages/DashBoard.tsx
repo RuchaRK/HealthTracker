@@ -1,5 +1,5 @@
 import * as React from 'react';
 
-export const Goals = () => {
+export const DashBoard = () => {
   return <h1>this is dashboard</h1>;
 };

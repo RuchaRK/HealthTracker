@@ -20,6 +20,12 @@ const RightHalf = styled.div`
   flex-direction: column;
 `;
 
+const Content = styled.div`
+  background: #f1f5f9;
+  height: 100%;
+  overflow: auto;
+`;
+
 export const PageWrapper = ({ children }) => {
   return (
     <MainContainer>
@@ -29,7 +35,7 @@ export const PageWrapper = ({ children }) => {
 
       <RightHalf>
         <Header />
-        {children}
+        <Content>{children}</Content>
       </RightHalf>
     </MainContainer>
   );

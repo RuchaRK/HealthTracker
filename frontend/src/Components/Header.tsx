@@ -7,7 +7,8 @@ const HeaderContainer = styled.div`
   padding: 0px 32px;
   border-bottom: 1px solid #cbd5e1;
   background: #fff;
-  height: 100px;
+  max-height: 100px;
+  height: 100%;
   align-items: center;
 `;
 
