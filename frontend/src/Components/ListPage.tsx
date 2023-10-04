@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import * as React from 'react';
 
 const ListContainer = styled.div`
   display: flex;
@@ -16,12 +15,10 @@ const FirstSection = styled.div(
   height: 160px;
   width: 100%;
   border-radius: 12px;
-  background-image: linear-gradient(90deg, #fc6212 66.28%, rgba(234, 88, 12, 0) 100%),
-    url(${img});
+  background-image: linear-gradient(90deg, #fc6212 66.28%, rgba(234, 88, 12, 0) 100%), url(${img});
   display: flex;
   justify-content: space-between;
   padding: 4px 32px;
-  z-index: 2;
 `
 );
 
@@ -79,23 +76,7 @@ const Button = styled.button`
   width: fit-content;
 `;
 
-const Img = styled.image(
-  ({ img }) => `
-  position: absolute;
-  right: 0;
-  top: 0;
-  border-radius: 0 12px 12px 0;
-  bottom: 0;
-  /* background-color: grey; */
-  background-image: linear-gradient(90deg, #ededed 66.28%, rgb(242 240 239 / 0%) 100%), url(/images/food.png);
-  background-position: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  /* width: 50%;;
-    `
-);
-
-export const ListPage = ({ column, data, title, description, image }) => {
+export const ListPage = ({ column, data, title, description, image, openForm }) => {
   return (
     <ListContainer>
       <FirstSection img={image}>
@@ -105,7 +86,7 @@ export const ListPage = ({ column, data, title, description, image }) => {
             <Description>{description}</Description>
           </div>
 
-          <Button>Add New </Button>
+          <Button onClick={openForm}>Add New </Button>
         </HeaderTextContainer>
       </FirstSection>
       <SecondSection>

@@ -1,15 +1,60 @@
 import * as React from 'react';
 import { ListPage } from '../Components/ListPage';
-import Modal from 'react-modal';
+import { Model } from '../Components/Model';
+
+import {
+  ButtonSave,
+  ButtonClose,
+  Title,
+  FormContainer,
+  ButtonContainer,
+  Input
+} from '../Components/Model.styles';
 
 export const Exercise = () => {
   const [exercises, setExercises] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setIsError] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [formData, setFormData] = React.useState({});
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const saveFormData = (event) => {
+    console.log(event.target.value);
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  const addData = async (exerciseObj) => {
+    console.log(exerciseObj);
+    try {
+      const response = await fetch('/api/exercises', {
+        method: 'POST',
+        body: JSON.stringify(exerciseObj),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      if (data) {
+        console.log(data);
+      }
+    } catch (error) {
+      setIsError(true);
+    }
+  };
 
   const fetchData = async () => {
     try {
       const data = await fetch('/api/exercises');
+
       const response = await data.json();
 
       if (response?.message === 'Success') {
@@ -32,7 +77,6 @@ export const Exercise = () => {
   if (error) {
     return <h3>Error occurred</h3>;
   }
-
   const column = ['Name', 'Duration(minutes)', 'Calories Burned'];
 
   const listData = exercises.map((data) => [
@@ -42,12 +86,40 @@ export const Exercise = () => {
   ]);
 
   return (
-    <ListPage
-      column={column}
-      data={listData}
-      title="Lets start by burning some calories!!!"
-      description="Don't wish for a good body, work for it..."
-      image="/images/exercise1.png"
-    />
+    <>
+      <ListPage
+        column={column}
+        data={listData}
+        title="Lets start by burning some calories!!!"
+        description="Don't wish for a good body, work for it..."
+        image="/images/exercise1.png"
+        openForm={openModal}
+      />
+
+      <Model isOpen={modalIsOpen} onRequestClose={closeModal}>
+        <FormContainer>
+          <Title>New Exercise</Title>
+          Name : <Input type="text" name="name" onChange={(event) => saveFormData(event)} />
+          Duration :
+          <Input type="text" name="durationInMinutes" onChange={(event) => saveFormData(event)} />
+          Calories Burned(pre Minute) :
+          <Input
+            type="number"
+            name="caloriesBurnedPerMinute"
+            onChange={(event) => saveFormData(event)}
+          />
+          <ButtonContainer>
+            <ButtonSave
+              onClick={() => {
+                addData(formData);
+                closeModal();
+              }}>
+              Save
+            </ButtonSave>
+            <ButtonClose onClick={closeModal}>close</ButtonClose>
+          </ButtonContainer>
+        </FormContainer>
+      </Model>
+    </>
   );
 };

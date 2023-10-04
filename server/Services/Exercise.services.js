@@ -10,11 +10,6 @@ async function addNewExercise(exerciseData) {
   }
 }
 
-const exerciseToAdd = {
-  name: "plank",
-  durationInMinutes: 2,
-};
-
 async function readAllExercises() {
   try {
     const exercises = await Exercise.find();

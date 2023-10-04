@@ -19,7 +19,7 @@ const exerciseGoal5 = {
   status: "Achieved",
 };
 
-createNewGoal(exerciseGoal5);
+//createNewGoal(exerciseGoal5);
 
 async function readAllGoals() {
   try {

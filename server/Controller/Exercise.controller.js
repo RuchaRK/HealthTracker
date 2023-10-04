@@ -23,6 +23,7 @@ exerciseRouter.get("/", async (req, res) => {
 exerciseRouter.post("/", async (req, res) => {
   try {
     const objToInsert = req.body;
+    console.log(objToInsert);
     const insertedObj = await addNewExercise(objToInsert);
     return res.status(200).json({ message: "Success", insertedObj });
   } catch (error) {
