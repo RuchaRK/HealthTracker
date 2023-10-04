@@ -2,23 +2,24 @@ const Goal = require("../models/Goal.model");
 
 async function createNewGoal(goalData) {
   try {
-    const goal = await new Goal(goalData);
+    const goal = new Goal(goalData);
     const newGoal = await goal.save();
     return newGoal;
   } catch (error) {
-    throw new error();
+    throw new Error(error);
   }
 }
 
 const exerciseGoal5 = {
-  name: "High-Intensity Interval Training",
-  description: "Short but intense workouts",
-  targetDate: new Date("2023-10-25"),
-  targetCalories: 500,
-  status: "Abandoned",
+  name: "Weight Loss Success",
+  caloriesType: "Burned",
+  description: "Lost 10 pounds through exercise and diet.",
+  targetDate: "2023-09-15",
+  targetCalories: 1500,
+  status: "Achieved",
 };
 
-//createNewGoal(exerciseGoal5);
+createNewGoal(exerciseGoal5);
 
 async function readAllGoals() {
   try {
@@ -26,7 +27,7 @@ async function readAllGoals() {
     console.log(goals);
     return goals;
   } catch (error) {
-    throw new error();
+    throw new Error(error);
   }
 }
 
@@ -41,7 +42,7 @@ async function deleteAGoal(goalId) {
   }
 }
 
-deleteAGoal("6517c79d43c15bac5f5f76f3");
+//deleteAGoal("6517c79d43c15bac5f5f76f3");
 
 module.exports = {
   createNewGoal,

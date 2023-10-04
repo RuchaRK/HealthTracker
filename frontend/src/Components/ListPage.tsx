@@ -10,21 +10,27 @@ const ListContainer = styled.div`
   height: 100%;
 `;
 
-const FirstSection = styled.div`
+const FirstSection = styled.div(
+  ({ img }) => `
+  position: relative;
   height: 160px;
   width: 100%;
   border-radius: 12px;
-  background: linear-gradient(90deg, #fc6212 42.28%, rgba(234, 88, 12, 0) 100%);
+  background-image: linear-gradient(90deg, #fc6212 66.28%, rgba(234, 88, 12, 0) 100%),
+    url(${img});
   display: flex;
   justify-content: space-between;
   padding: 4px 32px;
-`;
+  z-index: 2;
+`
+);
 
 const HeaderTextContainer = styled.div`
   padding: 28px 0px;
   display: flex;
   flex-direction: column;
   color: #fff;
+  gap: 16px;
 `;
 
 const SecondSection = styled.div`
@@ -63,30 +69,44 @@ const Title = styled.p`
 
 const Description = styled.p`
   color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 150%;
   letter-spacing: 0.1px;
 `;
 
 const Button = styled.button`
-  border-radius: 8px;
-  display: flex;
-  align-items: flex-start;
-  padding: 8px 24px;
-  gap: 10px;
+  width: fit-content;
 `;
+
+const Img = styled.image(
+  ({ img }) => `
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 0 12px 12px 0;
+  bottom: 0;
+  /* background-color: grey; */
+  background-image: linear-gradient(90deg, #ededed 66.28%, rgb(242 240 239 / 0%) 100%), url(/images/food.png);
+  background-position: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* width: 50%;;
+    `
+);
 
 export const ListPage = ({ column, data, title, description, image }) => {
   return (
     <ListContainer>
-      <FirstSection>
+      <FirstSection img={image}>
         <HeaderTextContainer>
-          <Title>{title}</Title>
-          <Description>{description}</Description>
+          <div>
+            <Title>{title}</Title>
+            <Description>{description}</Description>
+          </div>
+
           <Button>Add New </Button>
         </HeaderTextContainer>
-        <img src={image} alt="workout" style={{ objectFit: 'cover' }} />
       </FirstSection>
       <SecondSection>
         <Table>

@@ -6,6 +6,11 @@ const goalSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  caloriesType: {
+    type: String,
+    enum: ["Consumed", "Burned"],
+    required: true,
+  },
   description: {
     type: String,
     required: true,

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { ListPage } from '../Components/listPage';
+import { ListPage } from '../Components/ListPage';
+import Modal from 'react-modal';
 
 export const Exercise = () => {
   const [exercises, setExercises] = React.useState([]);
@@ -44,9 +45,9 @@ export const Exercise = () => {
     <ListPage
       column={column}
       data={listData}
-      title="Exercise"
-      description="Life has its ups and downs we call it squats."
-      image="/images/exercisePic.png"
+      title="Lets start by burning some calories!!!"
+      description="Don't wish for a good body, work for it..."
+      image="/images/exercise1.png"
     />
   );
 };
