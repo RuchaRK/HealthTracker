@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { Error } from '../Components/Error';
 import { ListPage } from '../Components/ListPage';
+import { Loader } from '../Components/Loader';
 import { format } from 'date-fns';
 import { Model } from '../Components/Model';
 import {
@@ -27,7 +29,6 @@ export const Goals = () => {
   }
 
   const saveFormData = (event) => {
-    console.log(event.target.value);
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
@@ -43,7 +44,8 @@ export const Goals = () => {
       });
       const data = await response.json();
       if (data) {
-        console.log('inserted data -', data);
+        setGoals(data.allGoals);
+        closeModal();
       }
     } catch (error) {
       setIsError(true);
@@ -70,10 +72,10 @@ export const Goals = () => {
   }, []);
 
   if (loading) {
-    return <h3>Data still loading </h3>;
+    return <Loader />;
   }
   if (error) {
-    return <h3>Error occurred</h3>;
+    return <Error/>;
   }
 
   const column = [
@@ -119,11 +121,11 @@ export const Goals = () => {
           <Input type="number" name="targetCalories" onChange={(event) => saveFormData(event)} />
           Status:
           <Input type="text" name="status" onChange={(event) => saveFormData(event)} />
+          {error && <p style={{color: "red"}}>Somthing went wrong while adding Goal</p>}
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
                 addData(formData);
-                closeModal();
               }}>
               Save
             </ButtonSave>

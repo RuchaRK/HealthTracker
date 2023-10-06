@@ -46,7 +46,8 @@ export const Exercise = () => {
       });
       const data = await response.json();
       if (data) {
-        
+        setExercises(data.allExercises);
+        closeModal();
       }
     } catch (error) {
       setIsError(true);
@@ -110,11 +111,11 @@ export const Exercise = () => {
             name="caloriesBurnedPerMinute"
             onChange={(event) => saveFormData(event)}
           />
+          {error && <p style={{color: "red"}}>Somthing went wrong while adding Goal</p>}
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
                 addData(formData);
-                closeModal();
               }}>
               Save
             </ButtonSave>

@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { Error } from '../Components/Error';
 import { ListPage } from '../Components/ListPage';
+import { Loader } from '../Components/Loader';
 import { Model } from '../Components/Model';
 import {
   ButtonSave,
@@ -44,7 +46,8 @@ export const Food = () => {
       const data = await response.json();
 
       if (data) {
-        console.log('inserted food - ', data);
+        setDiet(data.allFoodItems);
+        closeModal();
       }
     } catch (error) {
       setIsError(true);
@@ -71,12 +74,11 @@ export const Food = () => {
   }, []);
 
   if (loading) {
-    return <h3>Data still loading </h3>;
+    return <Loader />;
   }
   if (error) {
-    return <h3>Error occurred</h3>;
+    return <Error/>;
   }
-
   const column = ['Name', 'Calories', 'Proteins(in gm)', 'Carbohydrates(in gm)', 'Fat(in gm)'];
 
   const listData = diet.map((data) => [
@@ -114,11 +116,11 @@ export const Food = () => {
           />
           Fats (in grams):
           <Input type="text" name="fatInGrams" onChange={(event) => saveFormData(event)} />
+          {error && <p style={{color: "red"}}>Somthing went wrong while adding Goal</p>}
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
                 addData(formData);
-                closeModal();
               }}>
               Save
             </ButtonSave>
