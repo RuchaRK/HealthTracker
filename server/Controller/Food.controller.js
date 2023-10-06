@@ -11,7 +11,6 @@ const {
 foodRouter.get("/", async (req, res) => {
   try {
     const foodItems = await readAllFoodItems();
-
     return res.status(200).json({ message: "Success", foodItems });
   } catch (error) {
     res.status(500).json({
@@ -25,7 +24,10 @@ foodRouter.post("/", async (req, res) => {
   try {
     const objToInsert = req.body;
     const insertedObj = await addFoodItems(objToInsert);
-    return res.status(200).json({ message: "Success", insertedObj });
+    const allFoodItems = await readAllFoodItems();
+    return res
+      .status(200)
+      .json({ message: "Success", insertedObj, allFoodItems });
   } catch (error) {
     res.status(500).json({
       message: "Error occurred while fetching data.",
@@ -38,7 +40,10 @@ foodRouter.delete("/:foodId", async (req, res) => {
   try {
     const { foodId } = req.params;
     const deletedData = await deleteFoodItem(foodId);
-    return res.status(200).json({ message: "Success", deletedData });
+    const allFoodItems = await readAllFoodItems();
+    return res
+      .status(200)
+      .json({ message: "Success", deletedData, allFoodItems });
   } catch (error) {
     res.status(500).json({
       message: "Error occurred while fetching data.",

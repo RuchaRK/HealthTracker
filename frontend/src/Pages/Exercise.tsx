@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { Error } from '../Components/Error';
 import { ListPage } from '../Components/ListPage';
+import { Loader } from '../Components/Loader';
 import { Model } from '../Components/Model';
 
 import {
@@ -44,7 +46,7 @@ export const Exercise = () => {
       });
       const data = await response.json();
       if (data) {
-        console.log(data);
+        
       }
     } catch (error) {
       setIsError(true);
@@ -72,10 +74,10 @@ export const Exercise = () => {
   }, []);
 
   if (loading) {
-    return <h3>Data still loading </h3>;
+    return <Loader />;
   }
   if (error) {
-    return <h3>Error occurred</h3>;
+    return <Error/>;
   }
   const column = ['Name', 'Duration(minutes)', 'Calories Burned'];
 

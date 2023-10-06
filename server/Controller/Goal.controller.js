@@ -24,7 +24,8 @@ goalRouter.post("/", async (req, res) => {
   try {
     const objToInsert = req.body;
     const insertedObj = await createNewGoal(objToInsert);
-    return res.status(200).json({ message: "Success", insertedObj });
+    const allGoals = await readAllGoals();
+    return res.status(200).json({ message: "Success", insertedObj, allGoals });
   } catch (error) {
     res.status(500).json({
       message: "Error occurred while fetching data.",
@@ -37,7 +38,8 @@ goalRouter.delete("/:goalId", async (req, res) => {
   try {
     const { goalId } = req.params;
     const deletedData = await deleteAGoal(goalId);
-    return res.status(200).json({ message: "Success", deletedData });
+    const allGoals = await readAllGoals();
+    return res.status(200).json({ message: "Success", deletedData, allGoals });
   } catch (error) {
     res.status(500).json({
       message: "Error occurred while fetching data.",
