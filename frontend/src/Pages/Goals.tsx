@@ -10,11 +10,13 @@ import {
   ButtonContainer,
   Input
 } from '../Components/Model.styles';
+import { useDispatch, useSelector } from 'react-redux';
+const { addNewGoal, fetchGoals, deleteGoal } = require('../Actions/goalActions');
+import { AiOutlineDelete } from 'react-icons/ai';
 
 export const Goals = () => {
-  const [goals, setGoals] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setIsError] = React.useState(false);
+  const dispatch = useDispatch();
+  const { goal } = useSelector((store) => store.goal);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({});
 
@@ -31,74 +33,32 @@ export const Goals = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const addData = async (goalsObj) => {
-    try {
-      const response = await fetch('/api/goals', {
-        method: 'POST',
-        body: JSON.stringify(goalsObj),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      if (data) {
-        console.log('inserted data -', data);
-      }
-    } catch (error) {
-      setIsError(true);
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const data = await fetch('/api/goals');
-      const response = await data.json();
-
-      if (response?.message === 'Success') {
-        setGoals(response.allGoals);
-      }
-    } catch (error) {
-      setIsError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   React.useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <h3>Data still loading </h3>;
-  }
-  if (error) {
-    return <h3>Error occurred</h3>;
-  }
-
-  const column = [
-    'Name',
-    'Calories Type',
-    'Description',
-    'Target Date',
-    'Target Calories',
-    'Status'
-  ];
-
-  const listData = goals.map((data) => [
-    data.name,
-    data.caloriesType,
-    data.description,
-    format(new Date(data.targetDate), 'EEEE, do MMM yyyy'),
-    data.targetCalories,
-    data.status
-  ]);
+    dispatch(fetchGoals());
+  }, [dispatch]);
 
   return (
     <>
       <ListPage
-        column={column}
-        data={listData}
+        column={[
+          'Name',
+          'Calories Type',
+          'Description',
+          'Target Date',
+          'Target Calories',
+          'Status'
+        ]}
+        data={goal.map((data) => [
+          data.name,
+          data.caloriesType,
+          data.description,
+          format(new Date(data.targetDate), 'EEEE, do MMM yyyy'),
+          data.targetCalories,
+          data.status,
+          <button key={data._id} onClick={() => dispatch(deleteGoal(data._id))}>
+            <AiOutlineDelete />
+          </button>
+        ])}
         title="You are never too old to set a new Goal."
         description="The only limit to your impact is your imagination and commitment."
         image="/images/goal.png"
@@ -122,7 +82,7 @@ export const Goals = () => {
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
-                addData(formData);
+                addNewGoal(formData);
                 closeModal();
               }}>
               Save

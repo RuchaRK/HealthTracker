@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { ListPage } from '../Components/ListPage';
 import { Model } from '../Components/Model';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchDiets, deleteDiet, addNewDiet } from '../Actions/dietActions';
 import {
   ButtonSave,
   ButtonClose,
@@ -9,11 +11,11 @@ import {
   ButtonContainer,
   Input
 } from '../Components/Model.styles';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 export const Food = () => {
-  const [diet, setDiet] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setIsError] = React.useState(false);
+  const dispatch = useDispatch();
+  const { diet } = useSelector((state) => state.diet);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({});
 
@@ -30,68 +32,24 @@ export const Food = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const addData = async (foodObj) => {
-    console.log(foodObj);
-    try {
-      const response = await fetch('/api/food', {
-        method: 'POST',
-        body: JSON.stringify(foodObj),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-
-      if (data) {
-        console.log('inserted food - ', data);
-      }
-    } catch (error) {
-      setIsError(true);
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const data = await fetch('/api/food');
-      const response = await data.json();
-
-      if (response?.message === 'Success') {
-        setDiet(response.foodItems);
-      }
-    } catch (error) {
-      setIsError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   React.useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <h3>Data still loading </h3>;
-  }
-  if (error) {
-    return <h3>Error occurred</h3>;
-  }
-
-  const column = ['Name', 'Calories', 'Proteins(in gm)', 'Carbohydrates(in gm)', 'Fat(in gm)'];
-
-  const listData = diet.map((data) => [
-    data.name,
-    data.calories,
-    data.proteinsInGrams,
-    data.carbohydratesInGrams,
-    data.fatInGrams
-  ]);
+    dispatch(fetchDiets());
+  }, [dispatch]);
 
   return (
     <>
       <ListPage
-        column={column}
-        data={listData}
+        column={['Name', 'Calories', 'Proteins(in gm)', 'Carbohydrates(in gm)', 'Fat(in gm)']}
+        data={diet.map((data) => [
+          data.name,
+          data.calories,
+          data.proteinsInGrams,
+          data.carbohydratesInGrams,
+          data.fatInGrams,
+          <button key={data._id} onClick={() => dispatch(deleteDiet(data._id))}>
+            <AiOutlineDelete />
+          </button>
+        ])}
         title="Plan your Diet today."
         description="The only bad workout is the one that didn't come with a good meal afterward."
         image="/images/food.png"
@@ -117,7 +75,7 @@ export const Food = () => {
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
-                addData(formData);
+                addNewDiet(formData);
                 closeModal();
               }}>
               Save

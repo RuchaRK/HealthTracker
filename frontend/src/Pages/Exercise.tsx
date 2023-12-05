@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { ListPage } from '../Components/ListPage';
 import { Model } from '../Components/Model';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewExercise, fetchAllExercises, deleteExercise } from '../Actions/exerciseActions';
+import { AiOutlineDelete } from 'react-icons/ai';
 import {
   ButtonSave,
   ButtonClose,
@@ -12,9 +14,8 @@ import {
 } from '../Components/Model.styles';
 
 export const Exercise = () => {
-  const [exercises, setExercises] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setIsError] = React.useState(false);
+  const dispatch = useDispatch();
+  const { exercise } = useSelector((state) => state.exercise);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({});
 
@@ -31,65 +32,22 @@ export const Exercise = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const addData = async (exerciseObj) => {
-    console.log(exerciseObj);
-    try {
-      const response = await fetch('/api/exercises', {
-        method: 'POST',
-        body: JSON.stringify(exerciseObj),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      if (data) {
-        console.log(data);
-      }
-    } catch (error) {
-      setIsError(true);
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const data = await fetch('/api/exercises');
-
-      const response = await data.json();
-
-      if (response?.message === 'Success') {
-        setExercises(response.allExercises);
-      }
-    } catch (error) {
-      setIsError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   React.useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <h3>Data still loading </h3>;
-  }
-  if (error) {
-    return <h3>Error occurred</h3>;
-  }
-  const column = ['Name', 'Duration(minutes)', 'Calories Burned'];
-
-  const listData = exercises.map((data) => [
-    data.name,
-    data.durationInMinutes,
-    data.caloriesBurned
-  ]);
+    dispatch(fetchAllExercises());
+  }, [dispatch]);
 
   return (
     <>
       <ListPage
-        column={column}
-        data={listData}
+        column={['Name', 'Duration(minutes)', 'Calories Burned']}
+        data={exercise.map((data) => [
+          data.name,
+          data.durationInMinutes,
+          data.caloriesBurned,
+          <button key={data._id} onClick={() => dispatch(deleteExercise(data._id))}>
+            <AiOutlineDelete />
+          </button>
+        ])}
         title="Lets start by burning some calories!!!"
         description="Don't wish for a good body, work for it..."
         image="/images/exercise1.png"
@@ -111,7 +69,7 @@ export const Exercise = () => {
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
-                addData(formData);
+                addNewExercise(formData);
                 closeModal();
               }}>
               Save

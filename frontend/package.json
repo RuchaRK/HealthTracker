@@ -13,12 +13,14 @@
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@reduxjs/toolkit": "^2.0.1",
     "@swc/plugin-emotion": "^2.5.87",
     "date-fns": "^2.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-modal": "^3.16.1",
+    "react-redux": "^9.0.1",
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
