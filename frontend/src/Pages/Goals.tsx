@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { Error } from '../Components/Error';
 import { ListPage } from '../Components/ListPage';
+import { Loader } from '../Components/Loader';
 import { format } from 'date-fns';
 import { Model } from '../Components/Model';
 import {
@@ -29,7 +31,6 @@ export const Goals = () => {
   }
 
   const saveFormData = (event) => {
-    console.log(event.target.value);
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
@@ -79,6 +80,7 @@ export const Goals = () => {
           <Input type="number" name="targetCalories" onChange={(event) => saveFormData(event)} />
           Status:
           <Input type="text" name="status" onChange={(event) => saveFormData(event)} />
+          {error && <p style={{ color: 'red' }}>Somthing went wrong while adding Goal</p>}
           <ButtonContainer>
             <ButtonSave
               onClick={() => {

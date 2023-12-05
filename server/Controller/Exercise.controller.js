@@ -25,7 +25,10 @@ exerciseRouter.post("/", async (req, res) => {
     const objToInsert = req.body;
     console.log(objToInsert);
     const insertedObj = await addNewExercise(objToInsert);
-    return res.status(200).json({ message: "Success", insertedObj });
+    const allExercises = await readAllExercises();
+    return res
+      .status(200)
+      .json({ message: "Success", insertedObj, allExercises });
   } catch (error) {
     res.status(500).json({
       message: "Error occurred while fetching data.",
@@ -38,7 +41,10 @@ exerciseRouter.delete("/:exerciseId", async (req, res) => {
   try {
     const { exerciseId } = req.params;
     const deletedData = await deleteAnExercise(exerciseId);
-    return res.status(200).json({ message: "Success", deletedData });
+    const allExercises = await readAllExercises();
+    return res
+      .status(200)
+      .json({ message: "Success", deletedData, allExercises });
   } catch (error) {
     res.status(500).json({
       message: "Error occurred while fetching data.",

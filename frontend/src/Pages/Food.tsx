@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { Error } from '../Components/Error';
 import { ListPage } from '../Components/ListPage';
+import { Loader } from '../Components/Loader';
 import { Model } from '../Components/Model';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDiets, deleteDiet, addNewDiet } from '../Actions/dietActions';
@@ -72,6 +74,7 @@ export const Food = () => {
           />
           Fats (in grams):
           <Input type="text" name="fatInGrams" onChange={(event) => saveFormData(event)} />
+          {error && <p style={{ color: 'red' }}>Somthing went wrong while adding Goal</p>}
           <ButtonContainer>
             <ButtonSave
               onClick={() => {

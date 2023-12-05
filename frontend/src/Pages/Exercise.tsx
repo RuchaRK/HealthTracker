@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { Error } from '../Components/Error';
 import { ListPage } from '../Components/ListPage';
+import { Loader } from '../Components/Loader';
 import { Model } from '../Components/Model';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewExercise, fetchAllExercises, deleteExercise } from '../Actions/exerciseActions';
@@ -66,6 +68,7 @@ export const Exercise = () => {
             name="caloriesBurnedPerMinute"
             onChange={(event) => saveFormData(event)}
           />
+          {error && <p style={{ color: 'red' }}>Somthing went wrong while adding Goal</p>}
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
