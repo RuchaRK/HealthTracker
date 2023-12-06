@@ -1,23 +1,21 @@
 import * as React from 'react';
-import { Error } from '../Components/Error';
-import { ListPage } from '../Components/ListPage';
-import { Loader } from '../Components/Loader';
-import { Model } from '../Components/Model';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchDiets, deleteDiet, addNewDiet } from '../Actions/dietActions';
-import {
-  ButtonSave,
-  ButtonClose,
-  Title,
-  FormContainer,
-  ButtonContainer,
-  Input
-} from '../Components/Model.styles';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewDiet, deleteDiet, fetchDiets } from '../Actions/dietActions';
+import { ListPage } from '../Components/ListPage';
+import { Model } from '../Components/Model';
+import {
+  ButtonClose,
+  ButtonContainer,
+  ButtonSave,
+  FormContainer,
+  Input,
+  Title
+} from '../Components/Model.styles';
 
 export const Food = () => {
   const dispatch = useDispatch();
-  const { diet } = useSelector((state) => state.diet);
+  const diet = useSelector((state) => state.diet);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({});
 
@@ -74,11 +72,10 @@ export const Food = () => {
           />
           Fats (in grams):
           <Input type="text" name="fatInGrams" onChange={(event) => saveFormData(event)} />
-          {error && <p style={{ color: 'red' }}>Somthing went wrong while adding Goal</p>}
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
-                addNewDiet(formData);
+                dispatch(addNewDiet(formData));
                 closeModal();
               }}>
               Save

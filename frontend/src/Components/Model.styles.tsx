@@ -16,6 +16,10 @@ export const Input = styled.input`
   padding: 8px;
 `;
 
+export const Select = styled.select`
+  padding: 8px;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 16px;

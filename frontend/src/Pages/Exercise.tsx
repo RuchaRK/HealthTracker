@@ -1,23 +1,21 @@
 import * as React from 'react';
-import { Error } from '../Components/Error';
-import { ListPage } from '../Components/ListPage';
-import { Loader } from '../Components/Loader';
-import { Model } from '../Components/Model';
-import { useDispatch, useSelector } from 'react-redux';
-import { addNewExercise, fetchAllExercises, deleteExercise } from '../Actions/exerciseActions';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewExercise, deleteExercise, fetchAllExercises } from '../Actions/exerciseActions';
+import { ListPage } from '../Components/ListPage';
+import { Model } from '../Components/Model';
 import {
-  ButtonSave,
   ButtonClose,
-  Title,
-  FormContainer,
   ButtonContainer,
-  Input
+  ButtonSave,
+  FormContainer,
+  Input,
+  Title
 } from '../Components/Model.styles';
 
 export const Exercise = () => {
   const dispatch = useDispatch();
-  const { exercise } = useSelector((state) => state.exercise);
+  const exercise = useSelector((state) => state.exercise);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({});
 
@@ -30,9 +28,10 @@ export const Exercise = () => {
   }
 
   const saveFormData = (event) => {
-    console.log(event.target.value);
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
+
+  console.log(formData);
 
   React.useEffect(() => {
     dispatch(fetchAllExercises());
@@ -68,11 +67,10 @@ export const Exercise = () => {
             name="caloriesBurnedPerMinute"
             onChange={(event) => saveFormData(event)}
           />
-          {error && <p style={{ color: 'red' }}>Somthing went wrong while adding Goal</p>}
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
-                addNewExercise(formData);
+                dispatch(addNewExercise(formData));
                 closeModal();
               }}>
               Save

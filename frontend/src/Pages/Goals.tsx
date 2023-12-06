@@ -1,24 +1,24 @@
-import * as React from 'react';
-import { Error } from '../Components/Error';
-import { ListPage } from '../Components/ListPage';
-import { Loader } from '../Components/Loader';
 import { format } from 'date-fns';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewGoal, deleteGoal, fetchGoals } from '../Actions/goalActions';
+import { ListPage } from '../Components/ListPage';
 import { Model } from '../Components/Model';
 import {
-  ButtonSave,
   ButtonClose,
-  Title,
-  FormContainer,
   ButtonContainer,
-  Input
+  ButtonSave,
+  FormContainer,
+  Input,
+  Title,
+  Select
 } from '../Components/Model.styles';
-import { useDispatch, useSelector } from 'react-redux';
-const { addNewGoal, fetchGoals, deleteGoal } = require('../Actions/goalActions');
+
 import { AiOutlineDelete } from 'react-icons/ai';
 
 export const Goals = () => {
   const dispatch = useDispatch();
-  const { goal } = useSelector((store) => store.goal);
+  const goal = useSelector((store) => store.goal);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({});
 
@@ -38,6 +38,7 @@ export const Goals = () => {
     dispatch(fetchGoals());
   }, [dispatch]);
 
+  console.log(formData);
   return (
     <>
       <ListPage
@@ -71,7 +72,10 @@ export const Goals = () => {
           <Title>New Food</Title>
           Name: <Input type="text" name="name" onChange={(event) => saveFormData(event)} />
           Calories Type:
-          <Input type="text" name="caloriesType" onChange={(event) => saveFormData(event)} />
+          <Select name="caloriesType" onClick={(event) => saveFormData(event)}>
+            <option value="Consumed">Consumed</option>
+            <option value="Burned">Burned</option>
+          </Select>
           Description:
           <Input type="text" name="description" onChange={(event) => saveFormData(event)} />
           Target Date:
@@ -79,12 +83,15 @@ export const Goals = () => {
           Target-Calories:
           <Input type="number" name="targetCalories" onChange={(event) => saveFormData(event)} />
           Status:
-          <Input type="text" name="status" onChange={(event) => saveFormData(event)} />
-          {error && <p style={{ color: 'red' }}>Somthing went wrong while adding Goal</p>}
+          <Select name="status" onClick={(event) => saveFormData(event)}>
+            <option value="InProgress">InProgress</option>
+            <option value="Achieved">Achieved</option>
+            <option value="Abandoned">Abandoned</option>
+          </Select>
           <ButtonContainer>
             <ButtonSave
               onClick={() => {
-                addNewGoal(formData);
+                dispatch(addNewGoal(formData));
                 closeModal();
               }}>
               Save

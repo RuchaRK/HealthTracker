@@ -10,7 +10,7 @@ export const addNewDiet = (foodObj) => async (dispatch) => {
       }
     });
     const data = await response.json();
-    dispatch({ type: 'ADD_DIET_SUCCESS', payload: data });
+    dispatch({ type: 'ADD_DIET_SUCCESS', payload: data.foodItems });
   } catch (error) {
     dispatch({ type: 'ADD_DIET_FAILURE', payload: error });
   }
@@ -18,10 +18,12 @@ export const addNewDiet = (foodObj) => async (dispatch) => {
 
 export const fetchDiets = () => async (dispatch) => {
   try {
+    console.log('fetching');
     const response = await fetch('/api/food');
+    console.log(response);
     const data = await response.json();
 
-    dispatch({ type: 'GET_DIET_SUCCESS', payload: data });
+    dispatch({ type: 'GET_DIET_SUCCESS', payload: data.foodItems });
   } catch (error) {
     dispatch({ type: 'GET_DIET_FAILURE', payload: error });
   }
@@ -29,14 +31,14 @@ export const fetchDiets = () => async (dispatch) => {
 
 export const deleteDiet = (id) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/items/${id}`, {
+    const response = await fetch(`/api/food/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json'
       }
     });
     const data = await response.json();
-    dispatch({ type: 'DELETE_DIET_SUCCESS', payload: data });
+    dispatch({ type: 'DELETE_DIET_SUCCESS', payload: data.foodItems });
   } catch (error) {
     dispatch({ type: 'DELETE_DIET_FAILURE', payload: error });
   }
