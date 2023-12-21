@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Access your MongoDB connection string from secrets
-const mongoURI = process.env.MANGODB;
+const mongoURI = process.env.MONGODB;
 console.log(mongoURI);
 mongoose
   .connect(mongoURI, {

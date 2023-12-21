@@ -9,8 +9,8 @@
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd server && npm install",
     "start": "concurrently \"npm run frontend\" \"npm run backend\"",
-    "start:frontend": "cd frontend && npm start",
-    "start:backend": "cd server && npm start"
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd server && npm start"
   },
   "author": "",
   "license": "ISC",
