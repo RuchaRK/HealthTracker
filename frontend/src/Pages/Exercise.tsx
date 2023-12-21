@@ -41,14 +41,16 @@ export const Exercise = () => {
     <>
       <ListPage
         column={['Name', 'Duration(minutes)', 'Calories Burned']}
-        data={exercise.map((data) => [
-          data.name,
-          data.durationInMinutes,
-          data.caloriesBurned,
-          <button key={data._id} onClick={() => dispatch(deleteExercise(data._id))}>
-            <AiOutlineDelete />
-          </button>
-        ])}
+        data={
+          exercise?.map((data) => [
+            data.name,
+            data.durationInMinutes,
+            data.caloriesBurned,
+            <button key={data._id} onClick={() => dispatch(deleteExercise(data._id))}>
+              <AiOutlineDelete />
+            </button>
+          ]) ?? []
+        }
         title="Lets start by burning some calories!!!"
         description="Don't wish for a good body, work for it..."
         image="/images/exercise1.png"

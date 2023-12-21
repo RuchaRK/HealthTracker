@@ -27,6 +27,5 @@ async function deleteAnExercise(exerciseId) {
     throw new error();
   }
 }
-//deleteAnExercise("6517b7691ecf39b01e225916");
 
 module.exports = { addNewExercise, readAllExercises, deleteAnExercise };

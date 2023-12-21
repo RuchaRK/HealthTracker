@@ -12,7 +12,7 @@ export const addNewExercise = (exerciseObj) => async (dispatch) => {
     console.log(response);
     const data = await response.json();
     console.log(data);
-    dispatch({ type: 'ADD_EXERCISE_SUCCESS', payload: data });
+    dispatch({ type: 'ADD_EXERCISE_SUCCESS', payload: data.allExercises });
   } catch (error) {
     dispatch({ type: 'ADD_EXERCISE_FAILURE', payload: error });
   }

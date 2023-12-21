@@ -40,16 +40,18 @@ export const Food = () => {
     <>
       <ListPage
         column={['Name', 'Calories', 'Proteins(in gm)', 'Carbohydrates(in gm)', 'Fat(in gm)']}
-        data={diet.map((data) => [
-          data.name,
-          data.calories,
-          data.proteinsInGrams,
-          data.carbohydratesInGrams,
-          data.fatInGrams,
-          <button key={data._id} onClick={() => dispatch(deleteDiet(data._id))}>
-            <AiOutlineDelete />
-          </button>
-        ])}
+        data={
+          diet?.map((data) => [
+            data.name,
+            data.calories,
+            data.proteinsInGrams,
+            data.carbohydratesInGrams,
+            data.fatInGrams,
+            <button key={data._id} onClick={() => dispatch(deleteDiet(data._id))}>
+              <AiOutlineDelete />
+            </button>
+          ]) ?? []
+        }
         title="Plan your Diet today."
         description="The only bad workout is the one that didn't come with a good meal afterward."
         image="/images/food.png"
