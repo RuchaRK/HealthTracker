@@ -5,6 +5,7 @@ import { MdOutlineFitnessCenter } from 'react-icons/md';
 import { BiLogOut, BiSolidNotepad } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
 import { routeName } from '../App.routes';
+import { IoFitness } from 'react-icons/io5';
 
 const SideBarComponent = styled.div`
   display: flex;
@@ -21,11 +22,12 @@ const SideBarComponent = styled.div`
     0px 12px 17px 2px rgba(0, 0, 0, 0.03);
 `;
 
-const Header = styled.div`
+const Header = styled.h2`
   color: #f97316;
   border-bottom: 1px solid #cbd5e1;
   height: 100px;
   display: flex;
+  gap: 12px;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -37,7 +39,7 @@ const PagesContainer = styled.div`
   gap: 24px;
   width: 100%;
 `;
-const IconContainer = styled.div`
+export const IconContainer = styled.div`
   display: flex;
   gap: 16px;
   padding: 12px 16px;
@@ -74,7 +76,7 @@ export const SideBar = () => {
     <SideBarComponent>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
         <Header>
-          <h1 style={{ fontSize: '18px' }}>Fitness</h1>
+          <IoFitness size={25} /> Fitness Track
         </Header>
 
         <PagesContainer>

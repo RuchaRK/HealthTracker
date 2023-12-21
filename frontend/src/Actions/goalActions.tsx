@@ -15,7 +15,7 @@ export const addNewGoal = (goalsObj) => async (dispatch) => {
   }
 };
 
-export const fetchGoals = () => async () => {
+export const fetchGoals = () => async (dispatch) => {
   try {
     const response = await fetch('/api/goals');
     const data = await response.json();

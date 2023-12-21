@@ -1,5 +1,4 @@
 export const addNewDiet = (foodObj) => async (dispatch) => {
-  console.log(foodObj);
   try {
     const response = await fetch('/api/food', {
       method: 'POST',
@@ -18,9 +17,8 @@ export const addNewDiet = (foodObj) => async (dispatch) => {
 
 export const fetchDiets = () => async (dispatch) => {
   try {
-    console.log('fetching');
     const response = await fetch('/api/food');
-    console.log(response);
+
     const data = await response.json();
 
     dispatch({ type: 'GET_DIET_SUCCESS', payload: data.foodItems });
