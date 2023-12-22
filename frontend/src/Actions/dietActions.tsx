@@ -9,10 +9,12 @@ export const addNewDiet = (foodObj) => async (dispatch) => {
       }
     });
     const data = await response.json();
+    if (data.error) {
+      dispatch({ type: 'ADD_DIET_FAILURE', payload: data.error });
+      return;
+    }
     dispatch({ type: 'ADD_DIET_SUCCESS', payload: data.foodItems });
-  } catch (error) {
-    dispatch({ type: 'ADD_DIET_FAILURE', payload: error });
-  }
+  } catch (error) {}
 };
 
 export const fetchDiets = () => async (dispatch) => {
@@ -22,6 +24,10 @@ export const fetchDiets = () => async (dispatch) => {
     const data = await response.json();
 
     dispatch({ type: 'GET_DIET_SUCCESS', payload: data.foodItems });
+    if (data.error) {
+      dispatch({ type: 'GET_DIET_FAILURE', payload: data.error });
+      return;
+    }
   } catch (error) {
     dispatch({ type: 'GET_DIET_FAILURE', payload: error });
   }
@@ -36,6 +42,10 @@ export const deleteDiet = (id) => async (dispatch) => {
       }
     });
     const data = await response.json();
+    if (data.error) {
+      dispatch({ type: 'DELETE_DIET_FAILURE', payload: data.error });
+      return;
+    }
     dispatch({ type: 'DELETE_DIET_SUCCESS', payload: data.foodItems });
   } catch (error) {
     dispatch({ type: 'DELETE_DIET_FAILURE', payload: error });

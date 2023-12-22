@@ -14,7 +14,6 @@ const goalSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
-    unique: true,
   },
   targetDate: {
     type: Date,
