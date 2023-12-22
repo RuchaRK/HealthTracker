@@ -1,0 +1,8 @@
+If App does not start automatically please run below commands
+
+1. npm install
+2. npm run install-all
+3. nom run start 
+
+you will http://localhost:5173/ please navigate to URL
+or check https://gkz48r-5173.csb.app/ this URL
